@@ -1,0 +1,180 @@
+@import './clear.css'
+@import url('https://fonts.googleapis.com/css?family=Oswald')
+
+body
+  background: #ece7e7
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
+
+.is--hide
+  display: none
+
+.main
+  width: 1024px
+  margin: 0 auto
+
+.app__enter
+  width: 247px
+  margin: 0 auto
+  margin-top: 110px
+  margin-bottom: 20px
+  padding-top: 78px
+  background: #fff
+
+.inputs-filds
+  padding-left: 39px
+
+  .app__title
+    margin-bottom: 47px
+    font-family: 'Oswald', sans-serif
+
+  .inputs-book
+    width: 100%
+    input
+      width: 100%
+      display: block
+      border: none
+      border-bottom: 1px solid #bbdddb
+
+.add-book
+  background: #577ca1
+  color: #fff
+  display: inline-block
+  width: 100%
+  text-align: center
+  padding: 5px 0
+  cursor: pointer
+
+
+.img-load-preview
+  margin-top: 20px
+  border: 2px dashed #0087F7
+  border-radius: 5px
+  background: white
+  padding: 30px 36px
+  text-align: center
+  position: relative
+  overflow: hidden
+
+.img-load-preview.is--hover
+  border-style: solid
+  .dz-message
+    opacity: 0.5
+
+.add-file-input
+  cursor: pointer
+  width: 100%
+  height: 157%
+  position: absolute
+  top: -50px
+  right: 0
+  left: 0
+  margin: 0 auto
+  z-index: 50
+
+
+.img--loaded
+  .add-file-input
+    z-index: 0
+
+.imgPreview
+    overflow: hidden
+    margin: 0 auto
+    &:hover
+      img
+        filter: blur(8px)
+      .imgPreview__info
+        display: block
+
+.imgPreview__info
+  display: none
+  position: absolute
+  top: 15px
+  left: 0
+  right: 0
+  margin: 0 auto
+  z-index: 50
+
+.imgPreview.is--checked
+    height: 126px
+    transform: scale(1.05, 1.05)
+
+.img-checking
+  position: absolute
+  visibility: hidden
+
+.btn-add-book
+  background: #1f908a
+  color: #fff
+  border: none
+  padding: 18px 30px
+  margin-top: 49px
+  cursor: pointer
+  &:hover
+    background: #37bab3
+
+.dz-info
+  position: absolute
+  top: 50%
+  left: 0
+  right: 0
+  margin: 0 auto
+  margin-top: -25px
+  z-index: 25
+  padding: 10px
+  background: #fff
+  opacity: 0
+  transform: translateY(-320%)
+  transition: all .8s ease
+  color: #fff
+
+.dz-success
+  opacity: 1
+  transform: translateY(0)
+  background: #62c7ee
+
+.dz-error
+  opacity: 1
+  transform: translateY(0)
+  background: #FF3635
+
+.book-list
+  background: #fff
+  padding: 15px 6px
+  border: 1px solid #000
+  margin-bottom: 20px
+
+.book-item
+  float: left
+  margin: 5px 14px
+  position: relative
+  &:hover
+    .book-item__delete-btn
+      display: block
+  
+.book-item__img
+  position: relative
+ 
+.book-item__info
+  position: absolute
+  top: 0
+  right: 0
+  left: 0
+  width: 100%
+  padding: 5px
+  background: rgba(0, 0, 0, 0.42)
+  color: #fff
+  text-align: center
+
+
+.book-item__delete-btn
+  background: url('../img/error.svg') no-repeat
+  width: 20px
+  height: 20px
+  position: absolute
+  top: -10px
+  right: -5px
+  z-index: 15
+  cursor: pointer
+  display: none
+  &:hover
+    opacity: 0.8
