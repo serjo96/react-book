@@ -1,5 +1,9 @@
- const addBook = (book) => { return { type: 'BUTTON_CLICK', book} };
+ const addBook = (book) => { return {type: 'ADD_BOOK', book}};
 
- const deleteBook = (payload) => { return {type: "DELETE_BOOK", payload} };
+ const deleteBook = (bookID) => { return {type: "DELETE_BOOK", bookID} };
 
- export  {addBook, deleteBook};
+ const takeChanges = (changedItem) => { return {type: "CHANGE_BOOK", changedItem} };
+
+ const loadLocalData = (localItems) => { return {type: "LOAD_LOCAL_STORAGE_DATA", localItems} };
+
+ export  {addBook, deleteBook, takeChanges, loadLocalData};

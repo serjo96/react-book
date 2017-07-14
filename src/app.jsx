@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import  {deleteBook} from './actions/userActions'
 import '../styles/index.scss'
 import InputsContainer from './inputs/InputsContainer'
-import BookList from './bookList/index'
+import BookList from './bookList/booklist'
 
 
 export default class App extends Component {
@@ -13,7 +11,6 @@ export default class App extends Component {
             <InputsContainer />
             <BookList  />
         </div>
-
     )
   }
 }

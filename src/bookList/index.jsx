@@ -1,58 +1,62 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import  {deleteBook} from '../actions/userActions'
+import  {deleteBook, takeChanges} from '../actions/userActions'
 
 
 
 
- class BookList extends Component {
+ class Book extends Component {
      constructor(props) {
          super(props);
          this.test = this.test.bind(this);
-         this.state = {
-             id: '2'
-         }
+         this.deleteItem = this.deleteItem.bind(this);
+
      }
 
+    deleteItem(){
+        this.props.deleteBook(
+             this.props.id
+        );
+    }
+
     test(e){
-         console.log(e.target.parentNode.id)
-        this.props.deleteBook({
-            id: e.target.parentNode.id
-        });
-         // e.target.parentNode.remove();
+       this.props.takeChanges({
+
+               id: this.props.id,
+               author: this.props.author,
+               name: this.props.name,
+               img: this.props.img,
+               test: true
+
+           });
     }
 
     render() {
         return (
-                <div className='book-list clearfix'>
-                    <h2>Здесь будет ваш список книг!</h2>
-                    {this.props.book.map((el, index) =>
-                        (el.name.length === 0 && el.author.length === 0) ? console.log(el) :
-                            <div className="book-item" key={index} id={el.id}>
-                                <div className="book-item__delete-btn" onClick={this.test}></div>
-                                <div className="book-item__img">
-                                    <img src={el.imgUrl} alt=""/>
-                                    <div className="book-item__info">
-                                        <div>{el.author}</div>
-                                        <div>{el.name }</div>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
+            <div className="book-item" id={this.props.id}>
+                <div className="book-item__btn delete-btn" onClick={this.deleteItem}></div>
+                <div className="book-item__btn change-btn" onClick={this.test}></div>
+                <div className="book-item__data">
+                    <img className="book-item__img" src={this.props.img}  alt=""/>
+                    <div className="book-item__info">
+                        <div className="book-item__author">{this.props.author}</div>
+                        <div className="book-item__name">{this.props.name}</div>
+                    </div>
                 </div>
+            </div>
 
         )
     }
 }
 
-function mapStateToProps (state) {
-    return {
-        book: state
-    }
+function mapStateToProps () {
+    return {}
 }
 
+
 const mapDispatchToProps = (dispatch) => ({
-    deleteBook: (params) => dispatch(deleteBook(params))
+    deleteBook: (params) => dispatch(deleteBook(params)),
+    takeChanges: (params) => dispatch(takeChanges(params))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(BookList)
+export default connect(mapStateToProps, mapDispatchToProps)(Book)

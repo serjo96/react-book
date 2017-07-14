@@ -124,7 +124,7 @@ body
   background: #fff
   opacity: 0
   transform: translateY(-320%)
-  transition: all .8s ease
+  transition: all .8s linear
   color: #fff
 
 .dz-success
@@ -140,18 +140,20 @@ body
 .book-list
   background: #fff
   padding: 15px 6px
+  padding-bottom: 50px
   border: 1px solid #000
   margin-bottom: 20px
+  position: relative
 
 .book-item
   float: left
   margin: 5px 14px
   position: relative
   &:hover
-    .book-item__delete-btn
+    .book-item__btn
       display: block
   
-.book-item__img
+.book-item__data
   position: relative
  
 .book-item__info
@@ -165,16 +167,35 @@ body
   color: #fff
   text-align: center
 
-
-.book-item__delete-btn
-  background: url('../img/error.svg') no-repeat
+.book-item__btn
   width: 20px
   height: 20px
   position: absolute
   top: -10px
-  right: -5px
-  z-index: 15
   cursor: pointer
   display: none
+  z-index: 15
+  transition: transform 0.5s linear
   &:hover
-    opacity: 0.8
+    transform: rotateY(160deg)
+
+.delete-btn
+  background: url('../img/error.svg') no-repeat
+  right: -5px
+
+.change-btn
+  background: url('../img/pencil.svg') no-repeat
+  left: -5px
+
+.btn-save-list
+	position: absolute
+	bottom: 10px
+	right: 20px
+	border: none
+	background: #1f908a
+	color: #fff
+	cursor: pointer
+	padding: 10px
+	&:hover
+		background: #37bab3
+

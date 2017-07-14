@@ -10,10 +10,10 @@ class InputsContainer extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({})
+const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = (dispatch) => ({
-    addBook: (params) => dispatch(addBook(params))
+    addBook: (item) => dispatch(addBook(item))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(InputsContainer)

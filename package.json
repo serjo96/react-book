@@ -11,16 +11,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alicoding/react-webpack-babel"
+    "url": "https://github.com/serjo96/react-book"
   },
-  "author": "Ali Al Dallal",
+  "author": "Serjo",
   "license": "MIT",
-  "homepage": "https://github.com/alicoding/react-webpack-babel#readme",
+  "homepage": "https://github.com/serjo96/react-book",
   "dependencies": {
-    "node-sass": "^4.3.0",
+    "node-sass": "^4.5.3",
     "react": "15.4.2",
     "react-dom": "15.4.2",
-    "react-redux": "^5.0.5",
+    "react-redux": "^5.0.4",
     "redux": "^3.6.0",
     "sass-loader": "^6.0.2"
   },
