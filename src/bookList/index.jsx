@@ -19,16 +19,14 @@ import  {deleteBook, takeChanges} from '../actions/userActions'
         );
     }
 
-    test(e){
+    test(){
        this.props.takeChanges({
-
-               id: this.props.id,
-               author: this.props.author,
-               name: this.props.name,
-               img: this.props.img,
-               test: true
-
-           });
+           id: this.props.id,
+           author: this.props.author,
+           name: this.props.name,
+           img: this.props.img,
+           test: true
+       });
     }
 
     render() {
@@ -44,7 +42,6 @@ import  {deleteBook, takeChanges} from '../actions/userActions'
                     </div>
                 </div>
             </div>
-
         )
     }
 }
