@@ -2,8 +2,10 @@
 
  const deleteBook = (bookID) => { return {type: "DELETE_BOOK", bookID} };
 
- const takeChanges = (changedItem) => { return {type: "CHANGE_BOOK", changedItem} };
+ const takeChanges = (changedItem) => { return {type: "TAKE_CHANGE_DATA", changedItem} };
 
  const loadLocalData = (localItems) => { return {type: "LOAD_LOCAL_STORAGE_DATA", localItems} };
 
- export  {addBook, deleteBook, takeChanges, loadLocalData};
+ const changeBook = (book) => { return {type: "CHANGE_BOOK", book} };
+
+ export  {addBook, deleteBook, takeChanges, loadLocalData, changeBook};
