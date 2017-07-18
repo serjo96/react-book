@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 
-
 export default class DropZone extends Component {
     constructor(props) {
         super(props);
@@ -68,7 +67,9 @@ export default class DropZone extends Component {
             setTimeout(()=> this.setState({imageStatusMessage: '', imgInfoClass: 'dz-info'}), 2500);
             e.target.parentNode.classList.add('is--checked');
             e.target.classList.remove('img-checking');
-            this.props.takeImgUrl(this.state.imagePreviewUrl)
+
+            this.props.takeImgUrl(this.state.imagePreviewUrl);
+
         }else{
             e.target.parentNode.classList.remove('is--checked');
             this.setState({

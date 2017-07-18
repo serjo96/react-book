@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import  {deleteBook, takeChanges} from '../actions/userActions'
+import  {deleteBook, takeChanges} from '../../actions/userActions'
 
 
 
@@ -21,6 +21,7 @@ import  {deleteBook, takeChanges} from '../actions/userActions'
 
     test(){
        this.props.takeChanges({
+           index: this.props.index,
            id: this.props.id,
            author: this.props.author,
            name: this.props.name,

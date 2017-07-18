@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import Inputs from './index'
-import {addBook, changeBook} from '../actions/userActions'
+import AddBook from './addInput'
+import {addBook, changeBook} from '../../actions/userActions'
 import { connect } from 'react-redux'
 
 
 class InputsContainer extends Component {
     render() {
-        return <Inputs addBook={this.props.addBook} changeBook={this.props.changeBook} />
+        return <AddBook addBook={this.props.addBook} changeBook={this.props.changeBook} />
     }
 }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import {loadLocalData} from '../actions/userActions'
+import {loadLocalData} from '../../actions/userActions'
 import Book from './index'
 
 
@@ -18,7 +18,7 @@ class BookList extends Component {
                 <div className='book-list clearfix'>
                     {this.props.books.map((item, index) =>
                         (item.name.length === 0 && item.author.length === 0) ? null :
-                        <Book author={item.author} name={item.name} id={item.id} img={item.imgUrl} key={index}/>)
+                        <Book author={item.author} name={item.name} id={item.id} img={item.imgUrl} index={index} key={index}/>)
                     }
 
                     <button className="btn-save-list" onClick={()=> localStorage.setItem('items', JSON.stringify(this.props.books))}>Сохранить список книг</button>
