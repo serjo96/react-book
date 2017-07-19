@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import { updateBookForm, addBook, cleanForm } from '../../actions/book';
+import BookForm from '../../components/BookForm/BookForm';
 
 class AddBook extends Component {
     constructor(props) {
         super(props);
-        this.onInputChange = this.onInputChange.bind(this);
         this.takeVal = this.takeVal.bind(this);
         this.CheckImg = this.CheckImg.bind(this);
-        this.test = this.test.bind(this);
         this.state = {
-            id: '',
-            author: '',
-            name: '',
             file: '',
             imagePreviewUrl: null,
             imageStatusMessage: '',
@@ -31,18 +27,9 @@ class AddBook extends Component {
         return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }
 
-    clearInputs(){
-        this.setState({
-            author: '',
-            name: ''
-        })
-
-    }
-
-    onInputChange(e){
-        (e.target.classList.contains('inputs-book__name')) ? this.setState({ name: e.target.value }) : this.setState({ author: e.target.value})
-        e.preventDefault();
-    }
+    onInputChange = (e) => {
+        this.props.updateBookForm(e.target.name,  e.target.value);
+    };
 
     takeVal() {
         if(this.state.author.length !== 0 && this.state.name.length !== 0 && this.state.imagePreviewUrl){
@@ -67,7 +54,6 @@ class AddBook extends Component {
                 imagePreviewUrl: '',
                 imgStatus: false
             });
-            this.clearInputs();
         }else {
             this.setState({
                 imgInfoClass: 'dz-info dz-error',
@@ -79,13 +65,14 @@ class AddBook extends Component {
             }), 2500);
         }
     }
-    _handleImageChange(e) {
+    _handleImageChange = (e) => {
         let reader = new FileReader();
         let file = e.files[0];
         this.setState({
             imageStatusMessage: 'loading'
         });
         reader.onloadend = () => {
+            this.props.updateBookForm('imgUrl',  reader.result);
             this.setState({
                 file: file,
                 imagePreviewUrl: reader.result,
@@ -96,7 +83,7 @@ class AddBook extends Component {
     }
 
     drawImg(){
-        const {imagePreviewUrl, file} = this.state;
+        /* const {imagePreviewUrl, file} = this.state;
         if (this.state.imgStatus) {
             return <div className="imgPreview" onClick={(e) => e.preventDefault()}>
                 <div className="imgPreview__info">
@@ -107,7 +94,7 @@ class AddBook extends Component {
             </div>
         } else {
             return null
-        }
+        } */
     }
 
     CheckImg(e){
@@ -136,18 +123,6 @@ class AddBook extends Component {
         }
     }
 
-    test (){
-        console.log(123)
-        if(this.props.change){
-            console.log(123)
-            this.setState({
-                author: this.props.change.author
-            })
-        }
-    }
-
-
-
     drop(e) {
         e.stopPropagation();
         e.preventDefault();
@@ -157,77 +132,58 @@ class AddBook extends Component {
         const dt = e.dataTransfer;
         this._handleImageChange(dt)
     }
-
-
+    dragenter(e) {
+        e.stopPropagation();
+        e.preventDefault();
+    }
+    dragover(e) {
+        console.log(e.target)
+        e.stopPropagation();
+        e.preventDefault();
+        if (e.target.className.indexOf('img-load-preview') === 0 || e.target.className.indexOf('imgPreview') === 0 || e.target.className.indexOf('dz-message') === 0 || e.target.className.indexOf('dz-image') === 0) {
+            e.target.closest('.img-load-preview').classList.add("is--hover")
+        }
+    }
+    dragLeave(e){
+        if (e.target.className.indexOf('img-load-preview') === 0 || e.target.className.indexOf('dz-message') === 0) {
+            e.target.closest('.img-load-preview').classList.remove("is--hover")
+        }
+    }
+    onSubmit = () => {
+        this.props.addBook();
+        this.props.cleanForm();
+    };
     render() {
-        function dragenter(e) {
-            e.stopPropagation();
-            e.preventDefault();
-        }
-
-        function dragover(e) {
-            console.log(e.target)
-            e.stopPropagation();
-            e.preventDefault();
-            if (e.target.className.indexOf('img-load-preview') === 0 || e.target.className.indexOf('imgPreview') === 0 || e.target.className.indexOf('dz-message') === 0 || e.target.className.indexOf('dz-image') === 0) {
-                e.target.closest('.img-load-preview').classList.add("is--hover")
-            }
-        }
-
-        function dragLeave(e){
-            if (e.target.className.indexOf('img-load-preview') === 0 || e.target.className.indexOf('dz-message') === 0) {
-                e.target.closest('.img-load-preview').classList.remove("is--hover")
-            }
-        }
-        if (!this.props.change) {
-            return (
-                <div className="app__enter">
-                    <div className="inputs-filds">
-                        <h1 className="app__title">Создай свой список книг!</h1>
-                        <div className="inputs-book">
-                            <input onChange={this.onInputChange} className="inputs-book__author" placeholder="Автор"
-                                   type="text" value={this.state.author}/>
-                            <input onChange={this.onInputChange} className="inputs-book__name" placeholder="Название"
-                                   type="text" value={this.state.name}/>
-                        </div>
-                        <input id="fileUpload" className="add-file-input" type="file" accept=".jpg,.png" onChange={(e) => this._handleImageChange(e.target)}/>
-                        <label htmlFor="fileUpload">
-                            <div className="img-load-preview"
-                                 onDragOver={(e) => dragover(e)}
-                                 onDragEnter={(e) => dragenter(e)}
-                                 onDrop={(e) => this.drop(e)}
-                                 onDragLeave={(e) => dragLeave(e)}
-                            >
-                                {this.drawImg()}
-                                <div className={this.state.imgMessageClass}>Drop files here or click to upload.</div>
-                                <div className={this.state.imgInfoClass}>{this.state.imageStatusMessage}</div>
-                            </div>
-                        </label>
-
-                    </div>
-
-                    <div className="button-wrap">
-                        <button className="btn-add-book" onClick={this.takeVal}>Добавить книгу</button>
-                    </div>
-                </div>
-            )
-        }else {
-            return(
-                <div>
-                    <input onChange={this.onInputChange} className="inputs-book__author" placeholder="Автор"
-                           type="text" value={this.state.author}/>
-                    <input onChange={this.onInputChange} className="inputs-book__name" placeholder="Название"
-                           type="text" value={this.state.name}/>
-                    <DropZone takeImgUrl={this.takeImgUrl} />
-                    <button onClick={this.takeVal}>change book</button>
-                </div>
-            )
-        }
+        return (
+			<div className="app__enter">
+				<div className="inputs-filds">
+					<h1 className="app__title">Создай свой список книг!</h1>
+					<BookForm
+						onInputChange={this.onInputChange}
+						author={this.props.bookForm.author}
+						name={this.props.bookForm.name}
+						imgUrl={this.props.bookForm.imgUrl}
+						_handleImageChange={this._handleImageChange}
+						dragover={this.dragover}
+						dragenter={this.dragenter}
+						drop={this.drop}
+						dragLeave={this.dragLeave}
+						drawImg={this.drawImg}
+						imgMessageClass={this.state.imgMessageClass}
+						imgInfoClass={this.state.imgInfoClass}
+						imageStatusMessage={this.state.imageStatusMessage}
+					/>
+				</div>
+				<div className="button-wrap">
+					<button className="btn-add-book" onClick={this.onSubmit}>Добавить книгу</button>
+				</div>
+			</div>
+        )
     }
 }
 
 const mapStateToProps = (state) => ({
-    change: state.changesData
+    bookForm: state.addBook
 });
 
-export default connect(mapStateToProps)(AddBook)
+export default connect(mapStateToProps, { updateBookForm, addBook, cleanForm })(AddBook)
