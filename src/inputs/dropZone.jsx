@@ -15,6 +15,8 @@ export default class DropZone extends Component {
         }
     }
 
+
+
     formatBytes(bytes, decimals) {
         if(bytes === 0) return '0 Bytes';
         let k = 1000,
@@ -66,6 +68,7 @@ export default class DropZone extends Component {
             setTimeout(()=> this.setState({imageStatusMessage: '', imgInfoClass: 'dz-info'}), 2500);
             e.target.parentNode.classList.add('is--checked');
             e.target.classList.remove('img-checking');
+            this.props.takeImgUrl(this.state.imagePreviewUrl)
         }else{
             e.target.parentNode.classList.remove('is--checked');
             this.setState({
@@ -91,7 +94,44 @@ export default class DropZone extends Component {
         this._handleImageChange(dt)
     }
 
+
+    componentWillReceiveProps(nextProps) {
+    // if (nextProps.imgNotice !== this.props.imgNotice ) {
+    //     if(this.props.imgNotice === 'clear'){
+    //         this.setState({
+    //             imgMessageClass: 'dz-message',
+    //             imagePreviewUrl: '',
+    //             imgStatus: false
+    //         });
+    //         console.log('must be succses')
+    //
+    //     }else if(this.props.imgNotice === 'error'){
+    //         console.log('must be erore')
+    //         this.setState({
+    //             imgInfoClass: 'dz-info dz-error',
+    //             imageStatusMessage: 'Заполните все поля и загрузите обложку!'
+    //         });
+    //         setTimeout(()=> this.setState({
+    //             imageStatusMessage: '',
+    //             imgInfoClass: 'dz-info'
+    //         }), 2500);
+    //     }
+    //  }
+    }
+// // делаем проверку, что бы только при изменении props.one происходило обновление компонента
+//     shouldComponentUpdate(nextProps, nextState) {
+//         console.log(this.props.imgNotice)
+//         console.log(this.props.imgNotice !== nextProps.imgNotice)
+//         console.log(nextProps)
+//         if (this.props.imgNotice !== nextProps.imgNotice) { // если предыдущий props.one не равен новому, то разрешаем перерендерить компонент
+//             return true;
+//         } // иначе всегда отказываем
+//         return false;
+//     }
+
+
     render() {
+
        function dragenter(e) {
             e.stopPropagation();
             e.preventDefault();

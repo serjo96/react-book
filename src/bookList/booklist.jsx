@@ -36,6 +36,7 @@ class BookList extends Component {
 
 
 function mapStateToProps (state) {
+    console.log(state)
     return {
         books: state.books
     }
