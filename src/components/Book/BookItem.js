@@ -1,7 +1,7 @@
 import React from 'react';
 
 const BookItem = (props) => (
-	<div className="book-item" id={props.id}>
+	<div className="book-item" id={props.id} style={{ border: props.selected ? '2px solid black' : '' }}>
 		<div className="book-item__btn delete-btn" onClick={() => props.deleteItem(props)} />
 		<div className="book-item__btn change-btn" onClick={() => props.test(props)} />
 		<div className="book-item__data" onClick={() => props.onClick(props.index)}>

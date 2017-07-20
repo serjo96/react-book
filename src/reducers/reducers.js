@@ -21,7 +21,7 @@ export default function rootReducer(state = initialState, action) {
         case FORM_BOOK:
             return update(state, {
                 addBook: {
-                    [action.key]: { $set: action.value}
+                    [action.key]: { $set: action.value }
                 }
             });
         case CLEAN_FORM:
@@ -34,7 +34,7 @@ export default function rootReducer(state = initialState, action) {
                 }
             });
         case DELETE_BOOK:
-            const books = state.books.filter(({id}) => id !== action.bookID);
+            const books = state.books.filter(({ id }) => id !== action.bookID);
             return {books};
 
         case SELECT_BOOK:
@@ -48,7 +48,9 @@ export default function rootReducer(state = initialState, action) {
         case CHANGE_BOOK:
             return update(state, {
                 books: {
-                    [action.book.index]: { $set: action.book}
+                    [action.index]: {
+                        [action.key]: { $set: action.value }
+                    },
                 }
             });
 

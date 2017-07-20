@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-// import  {deleteBook, takeChanges} from '../../actions/book'
-import BookItem from '../../components/Book/BookItem';
+import  { onSelectBook, changeBook } from '../../actions/book'
+// import BookItem from '../../components/Book/BookItem';
+import BookForm from '../../components/BookForm/BookForm';
 
 class Book extends Component {
-	constructor(props) {
-		super(props);
-
-	}
+	onChangeInput = (e) => {
+        this.props.changeBook({ ...e, index: this.props.selectBook });
+	};
 
 	render() {
 		const { selectBook, books } = this.props;
@@ -16,12 +16,22 @@ class Book extends Component {
 		}
 		return (
 			<div>
-				<BookItem
+				{/*<BookItem*/}
+					{/*author={books[selectBook].author}*/}
+					{/*name={books[selectBook].name}*/}
+					{/*id={books[selectBook].id}*/}
+					{/*img={books[selectBook].imgUrl}*/}
+				{/*/>*/}
+				<BookForm
+					onInputChange={this.onChangeInput}
 					author={books[selectBook].author}
 					name={books[selectBook].name}
 					id={books[selectBook].id}
-					img={books[selectBook].imgUrl}
+					imgUrl={books[selectBook].imgUrl}
 				/>
+				<div className="button-wrap">
+					<button className="btn-add-book" onClick={() => this.props.onSelectBook(-1)}>Скрыть</button>
+				</div>
 			</div>
 		)
 	}
@@ -35,9 +45,9 @@ function mapStateToProps (state) {
 }
 
 
-/* const mapDispatchToProps = (dispatch) => ({
-	deleteBook: (params) => dispatch(deleteBook(params)),
-	takeChanges: (params) => dispatch(takeChanges(params))
+const mapDispatchToProps = (dispatch) => ({
+    onSelectBook: (params) => dispatch(onSelectBook(params)),
+    changeBook: (params) => dispatch(changeBook(params))
 });
-*/
-export default connect(mapStateToProps)(Book)
+
+export default connect(mapStateToProps, mapDispatchToProps)(Book)

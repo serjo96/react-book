@@ -33,6 +33,7 @@ class BookList extends Component {
 								loadLocalData={loadLocalData}
 								deleteBook={deleteBook}
 								onClick={this.onSelect}
+								selected={this.props.selectBook === index}
 							/>)
 					}
 					<button className="btn-save-list" onClick={this.onSave}>Сохранить список книг</button>
@@ -50,7 +51,8 @@ class BookList extends Component {
 
 function mapStateToProps (state) {
 	return {
-		books: state.books
+		books: state.books,
+		selectBook: state.selectBook
 	}
 }
 
