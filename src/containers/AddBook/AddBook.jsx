@@ -80,7 +80,7 @@ class AddBook extends Component {
             });
         };
         reader.readAsDataURL(file);
-    }
+    };
 
     drawImg(){
         /* const {imagePreviewUrl, file} = this.state;
@@ -137,7 +137,7 @@ class AddBook extends Component {
         e.preventDefault();
     }
     dragover(e) {
-        console.log(e.target)
+        console.log(e.target);
         e.stopPropagation();
         e.preventDefault();
         if (e.target.className.indexOf('img-load-preview') === 0 || e.target.className.indexOf('imgPreview') === 0 || e.target.className.indexOf('dz-message') === 0 || e.target.className.indexOf('dz-image') === 0) {
@@ -183,6 +183,7 @@ class AddBook extends Component {
 }
 
 const mapStateToProps = (state) => ({
+    change: state.changesData,
     bookForm: state.addBook
 });
 
