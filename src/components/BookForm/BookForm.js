@@ -29,7 +29,7 @@ class BookForm extends Component {
     };
 
     CheckImg = (e) => {
-        console.log(e.target);
+        console.log(e.target.width);
         if(e.target.width === 140 && e.target.height === 205){
             this.setState({
                 imageStatusMessage: 'Обложка успешно загружена',
