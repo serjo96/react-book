@@ -1,7 +1,6 @@
 import {ADD_BOOK, CLEAN_FORM, FORM_BOOK, DELETE_BOOK, SELECT_BOOK, LOAD_LOCAL_STORAGE_DATA, CHANGE_BOOK} from '../constants'
 
 export const updateBookForm = ({ key, value, ...e }) => {
-	console.warn(e);
 	if (!key) {
         return {
             type: FORM_BOOK,

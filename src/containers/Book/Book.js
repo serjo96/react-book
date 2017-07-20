@@ -15,7 +15,7 @@ class Book extends Component {
 			return null;
 		}
 		return (
-			<div>
+			<div className="change-book">
 				{/*<BookItem*/}
 					{/*author={books[selectBook].author}*/}
 					{/*name={books[selectBook].name}*/}

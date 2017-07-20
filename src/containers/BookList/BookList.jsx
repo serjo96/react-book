@@ -13,9 +13,6 @@ class BookList extends Component {
 	onSave = () => {
 		localStorage.setItem('items', JSON.stringify(this.props.books))
 	};
-    onSelect = (index) => {
-        this.props.onSelectBook(index);
-	};
 	render() {
 		console.warn(this.props);
 		if(this.props.books.length > 0){
@@ -32,7 +29,7 @@ class BookList extends Component {
 								key={index}
 								loadLocalData={loadLocalData}
 								deleteBook={deleteBook}
-								onClick={this.onSelect}
+								changeItem={this.props.onSelectBook}
 								selected={this.props.selectBook === index}
 							/>)
 					}

@@ -27,7 +27,6 @@ export default function rootReducer(state = initialState, action) {
         case CLEAN_FORM:
             return Object.assign({}, state, {
                 addBook: {
-                    id: '',
                     author: '',
                     name: '',
                     imgUrl: '',

@@ -125,13 +125,13 @@ class BookForm extends Component {
                         />
                     </div>
                     <input
-                        id={"fileUpload" + this.props.id}
+                        id={this.props.id ? "fileUpdate" : "fileUpload"}
                         className="add-file-input"
                         type="file"
                         accept=".jpg,.png"
                         onChange={(e) => this._handleImageChange(e.target)}
                     />
-                    <label htmlFor={"fileUpload" + this.props.id}>
+                    <label htmlFor={this.props.id ? "fileUpdate" : "fileUpload"}>
                         <div className="img-load-preview"
                              onDragOver={(e) => this.dragover(e)}
                              onDragEnter={(e) => this.dragenter(e)}

@@ -55,7 +55,7 @@ class AddBook extends Component {
 						onInputChange={this.props.updateBookForm}
 						author={this.props.bookForm.author}
 						name={this.props.bookForm.name}
-                        idImg="fileUploadAdd"
+						imgUrl={this.props.bookForm.imgUrl}
                     />
 				</div>
 				<div className="button-wrap">

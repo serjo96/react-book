@@ -139,9 +139,13 @@ body
   float: left
   margin: 5px 14px
   position: relative
+  border: 2px solid transparent
   &:hover
     .book-item__btn
       display: block
+
+.book-item--selected
+    border: 2px solid #0087F7
   
 .book-item__data
   position: relative
@@ -156,6 +160,10 @@ body
   background: rgba(0, 0, 0, 0.42)
   color: #fff
   text-align: center
+
+.book-item__img
+  display: block
+  height: 100%
 
 .book-item__btn
   width: 20px
