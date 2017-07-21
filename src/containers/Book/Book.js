@@ -26,6 +26,7 @@ class Book extends Component {
 					onInputChange={this.onChangeInput}
 					author={books[selectBook].author}
 					name={books[selectBook].name}
+					subtitle={books[selectBook].subtitle}
 					id={books[selectBook].id}
 					imgUrl={books[selectBook].imgUrl}
 				/>

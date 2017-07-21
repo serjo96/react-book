@@ -114,14 +114,16 @@ class BookForm extends Component {
                         <input
                             onChange={this.props.onInputChange}
                             name="name"
-                            placeholder="Название"
+                            placeholder="Заголовок"
                             type="text"
                             value={this.props.name}
                         />
                         <input
+                            onChange={this.props.onInputChange}
                             type="text"
-                            name="sub-title"
+                            name="subtitle"
                             placeholder="Подзаголовок"
+                            value={this.props.subtitle}
                         />
                     </div>
                     <input

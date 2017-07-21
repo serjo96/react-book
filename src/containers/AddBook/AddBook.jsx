@@ -55,6 +55,7 @@ class AddBook extends Component {
 						onInputChange={this.props.updateBookForm}
 						author={this.props.bookForm.author}
 						name={this.props.bookForm.name}
+						subtitle={this.props.bookForm.subtitle}
 						imgUrl={this.props.bookForm.imgUrl}
                     />
 				</div>

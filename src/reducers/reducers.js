@@ -8,6 +8,7 @@ const initialState = {
         id: '',
         author: '',
         name: '',
+        subtitle: '',
         imgUrl: '',
     }
 } ;
@@ -15,8 +16,11 @@ export default function rootReducer(state = initialState, action) {
     console.log(action);
     switch (action.type) {
         case ADD_BOOK:
+            state.addBook.id = Math.floor(Math.random() * (250 - 1) + 1).toString();
             return update(state, {
-                    books: {$push: [state.addBook]}
+                    books: {
+                        $push: [state.addBook]
+                    }
                 });
         case FORM_BOOK:
             return update(state, {
@@ -29,6 +33,7 @@ export default function rootReducer(state = initialState, action) {
                 addBook: {
                     author: '',
                     name: '',
+                    subtitle: '',
                     imgUrl: '',
                 }
             });

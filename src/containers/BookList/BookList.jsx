@@ -13,6 +13,9 @@ class BookList extends Component {
 	onSave = () => {
 		localStorage.setItem('items', JSON.stringify(this.props.books))
 	};
+
+
+
 	render() {
 		console.warn(this.props);
 		if(this.props.books.length > 0){
@@ -23,12 +26,13 @@ class BookList extends Component {
 							<BookItem
 								author={item.author}
 								name={item.name}
+								subtitle={item.subtitle}
 								id={item.id}
 								img={item.imgUrl}
 								index={index}
 								key={index}
 								loadLocalData={loadLocalData}
-								deleteBook={deleteBook}
+								deleteBook={this.props.deleteBook}
 								changeItem={this.props.onSelectBook}
 								selected={this.props.selectBook === index}
 							/>)

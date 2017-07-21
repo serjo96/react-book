@@ -26,9 +26,13 @@ export function cleanForm(){
 	};
 }
 
- const deleteBook = (bookID) => ({type: DELETE_BOOK, bookID});
-
- const onSelectBook = (selectedBook) => { return {type: SELECT_BOOK, selectedBook} };
+export function deleteBook (bookID){
+    return{
+        type: DELETE_BOOK,
+        bookID
+    }
+}
+const onSelectBook = (selectedBook) => { return {type: SELECT_BOOK, selectedBook} };
 
  const loadLocalData = (localItems) => { return {type: LOAD_LOCAL_STORAGE_DATA, localItems} };
 
@@ -49,4 +53,4 @@ export function cleanForm(){
      };
  };
 
- export  { deleteBook, onSelectBook, loadLocalData, changeBook};
+ export  { onSelectBook, loadLocalData, changeBook};
