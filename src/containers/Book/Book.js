@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import  { onSelectBook, changeBook } from '../../actions/book'
+import  { onSelectBook, changeBook, updateBookForm } from '../../actions/book'
 // import BookItem from '../../components/Book/BookItem';
 import BookForm from '../../components/BookForm/BookForm';
 
 class Book extends Component {
+
 	onChangeInput = (e) => {
         this.props.changeBook({ ...e, index: this.props.selectBook });
+		this.props.onSelectBook(-1);
 	};
 
 	render() {
@@ -15,23 +17,28 @@ class Book extends Component {
 			return null;
 		}
 		return (
-			<div className="change-book">
+			<div>
 				{/*<BookItem*/}
 					{/*author={books[selectBook].author}*/}
 					{/*name={books[selectBook].name}*/}
 					{/*id={books[selectBook].id}*/}
 					{/*img={books[selectBook].imgUrl}*/}
 				{/*/>*/}
-				<BookForm
-					onInputChange={this.onChangeInput}
-					author={books[selectBook].author}
-					name={books[selectBook].name}
-					subtitle={books[selectBook].subtitle}
-					id={books[selectBook].id}
-					imgUrl={books[selectBook].imgUrl}
-				/>
-				<div className="button-wrap">
-					<button className="btn-add-book" onClick={() => this.props.onSelectBook(-1)}>Скрыть</button>
+				<div className="modal-wrapper"/>
+				<div className="change-book">
+					<BookForm
+						onInputChange={this.props.updateBookForm}
+						author={books[selectBook].author}
+						name={books[selectBook].name}
+						subtitle={books[selectBook].subtitle}
+						id={books[selectBook].id}
+						img={books[selectBook].img}
+						error={books[selectBook].error}
+						errorAction={books[selectBook].errorAddBook}
+					/>
+					<div className="button-wrap">
+						<button className="btn-add-book" onClick={() => this.onChangeInput}>Сохранить изменения</button>
+					</div>
 				</div>
 			</div>
 		)
@@ -48,7 +55,8 @@ function mapStateToProps (state) {
 
 const mapDispatchToProps = (dispatch) => ({
     onSelectBook: (params) => dispatch(onSelectBook(params)),
-    changeBook: (params) => dispatch(changeBook(params))
+    changeBook: (params) => dispatch(changeBook(params)),
+    updateBookForm: (params) => dispatch(updateBookForm(params))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Book)

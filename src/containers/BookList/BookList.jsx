@@ -28,7 +28,7 @@ class BookList extends Component {
 								name={item.name}
 								subtitle={item.subtitle}
 								id={item.id}
-								img={item.imgUrl}
+								img={item.img}
 								index={index}
 								key={index}
 								loadLocalData={loadLocalData}

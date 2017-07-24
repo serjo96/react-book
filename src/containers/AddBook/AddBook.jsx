@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateBookForm, addBook, cleanForm } from '../../actions/book';
+import { updateBookForm, onAddBook, cleanForm, errorAddBook } from '../../actions/book';
 import BookForm from '../../components/BookForm/BookForm';
 
 class AddBook extends Component {
@@ -43,8 +43,8 @@ class AddBook extends Component {
 
 
     onSubmit = () => {
-        this.props.addBook();
-        this.props.cleanForm();
+    	console.warn(this.props.bookForm);
+        this.props.onAddBook(this.props.bookForm);
     };
     render() {
         return (
@@ -56,8 +56,10 @@ class AddBook extends Component {
 						author={this.props.bookForm.author}
 						name={this.props.bookForm.name}
 						subtitle={this.props.bookForm.subtitle}
-						imgUrl={this.props.bookForm.imgUrl}
-                    />
+						img={this.props.bookForm.img}
+						error={this.props.bookForm.error}
+						errorAction={this.props.errorAddBook}
+					/>
 				</div>
 				<div className="button-wrap">
 					<button className="btn-add-book" onClick={this.onSubmit}>Добавить книгу</button>
@@ -72,4 +74,4 @@ const mapStateToProps = (state) => ({
     bookForm: state.addBook
 });
 
-export default connect(mapStateToProps, { updateBookForm, addBook, cleanForm })(AddBook)
+export default connect(mapStateToProps, { updateBookForm, onAddBook, cleanForm, errorAddBook })(AddBook)

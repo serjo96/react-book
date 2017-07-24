@@ -15,21 +15,20 @@ class BookForm extends Component {
 
     drawImg = () => {
         const { file } = this.state;
-        if (this.state.imgStatus) {
-            return <div className="imgPreview" onClick={(e) => e.preventDefault()}>
+        if (this.props.img.data) {
+            return <div className="imgPreview is--checked" onClick={(e) => e.preventDefault()}>
                 <div className="imgPreview__info">
                     <div>{file.name}</div>
                     <div>{formatBytes(file.size)}</div>
                 </div>
-                <img className="dz-image img-checking" src={this.props.imgUrl} onLoad={this.CheckImg} />
+                <img className="dz-image" src={this.props.img.data} onLoad={this.CheckImg} />
             </div>
         } else {
             return null
         }
     };
 
-    CheckImg = (e) => {
-        console.log(e.target.width);
+  /*  CheckImg = (e) => {
         if(e.target.width === 140 && e.target.height === 205){
             this.setState({
                 imageStatusMessage: 'Обложка успешно загружена',
@@ -54,6 +53,7 @@ class BookForm extends Component {
             }), 2500);
         }
     };
+    */
 
     _handleImageChange = (e) => {
         let reader = new FileReader();
@@ -61,15 +61,22 @@ class BookForm extends Component {
         this.setState({
             imageStatusMessage: 'loading'
         });
+        const _this = this;
         reader.onloadend = () => {
-
-            this.props.onInputChange({ key: 'imgUrl', value: reader.result });
-
+            var image = new Image();
+            image.onload = function() {
+                if (this.width === 140 && this.height === 205) {
+                    _this.props.onInputChange({  key: 'img',  value: { data: reader.result, fileName: file.name, fileSize: file.size } });
+                    _this.props.errorAction({info:'Обложка успешно загружена', classInfo:'dz-info dz-success'});
+                } else {
+                    _this.props.errorAction({info:'Обложка должна быть 140х205', classInfo:'dz-info dz-error'});
+                }
+            };
+            image.src = reader.result;
             this.setState({
                 file: file,
                 imgStatus: true
             });
-
         };
         reader.readAsDataURL(file);
     };
@@ -102,7 +109,7 @@ class BookForm extends Component {
 
     render() {
             return (
-                <div>
+                <div className="add-book-form">
                     <div className="inputs-book">
                         <input
                             onChange={this.props.onInputChange}
@@ -133,6 +140,7 @@ class BookForm extends Component {
                         accept=".jpg,.png"
                         onChange={(e) => this._handleImageChange(e.target)}
                     />
+                    <div className={this.props.error.classInfo}>{this.props.error.info}</div>
                     <label htmlFor={this.props.id ? "fileUpdate" : "fileUpload"}>
                         <div className="img-load-preview"
                              onDragOver={(e) => this.dragover(e)}
@@ -141,7 +149,7 @@ class BookForm extends Component {
                              onDragLeave={(e) => this.dragLeave(e)}
                         >
                             {this.drawImg()}
-                            <div className={this.state.imgMessageClass}>Drop files here or click to upload.</div>
+                            {!this.props.img.data && <div className={this.state.imgMessageClass}>Drop files here or click to upload.</div>}
                             <div className={this.state.imgInfoClass}>{this.state.imageStatusMessage}</div>
                         </div>
                     </label>
