@@ -86,6 +86,7 @@ body
 
 .imgPreview.is--checked
     height: 126px
+    width: 147px
     transform: scale(1.05, 1.05)
 
 .img-checking
@@ -139,9 +140,13 @@ body
   float: left
   margin: 5px 14px
   position: relative
+  border: 2px solid transparent
   &:hover
     .book-item__btn
       display: block
+
+.book-item--selected
+    border: 2px solid #0087F7
   
 .book-item__data
   position: relative
@@ -157,6 +162,10 @@ body
   color: #fff
   text-align: center
 
+.book-item__img
+  display: block
+  height: 100%
+
 .book-item__btn
   width: 20px
   height: 20px
@@ -167,7 +176,7 @@ body
   z-index: 15
   transition: transform 0.5s linear
   &:hover
-    transform: rotateY(160deg)
+    transform: scale(1.2)
 
 .delete-btn
   background: url('../img/error.svg') no-repeat
@@ -188,4 +197,8 @@ body
 	padding: 10px
 	&:hover
 		background: #37bab3
+
+.change-book
+  .add-book-form
+    transform: translate3d(0, 0, 0)
 
