@@ -1,4 +1,4 @@
-import {ADD_BOOK, ERROR_ADD_BOOK, CLEAN_FORM, FORM_BOOK, DELETE_BOOK, SELECT_BOOK, LOAD_LOCAL_STORAGE_DATA, CHANGE_BOOK} from '../constants'
+import {ADD_BOOK, ERROR_ADD_BOOK, CLEAN_FORM, FORM_BOOK, DELETE_BOOK, SELECT_BOOK, LOAD_LOCAL_STORAGE_DATA, CHANGE_BOOK, TAKE_CHANGE_DATA, CHANGES_FORM_BOOK, CLEAN_EDIT_FORM} from '../constants'
 
 export const updateBookForm = ({ key, value, ...e }) => {
     if (!key) {
@@ -10,6 +10,21 @@ export const updateBookForm = ({ key, value, ...e }) => {
     }
     return {
         type: FORM_BOOK,
+        key,
+        value
+    };
+};
+
+export const updateChangeBookForm = ({ key, value, ...e }) => {
+    if (!key) {
+        return {
+            type: CHANGES_FORM_BOOK,
+            key: e.target.name,
+            value: e.target.value
+        };
+    }
+    return {
+        type: CHANGES_FORM_BOOK,
         key,
         value
     };
@@ -40,6 +55,12 @@ function cleanForm(){
     };
 }
 
+function cleanEditForm(){
+    return {
+        type: CLEAN_EDIT_FORM,
+    };
+}
+
 export function deleteBook (bookID){
     return{
         type: DELETE_BOOK,
@@ -48,33 +69,41 @@ export function deleteBook (bookID){
 }
 const onSelectBook = (selectedBook) => { return {type: SELECT_BOOK, selectedBook} };
 
+export const changeBookData = (data) => {
+
+        return {
+            type: TAKE_CHANGE_DATA,
+            data
+        };
+
+};
+
 const loadLocalData = (localItems) => { return {type: LOAD_LOCAL_STORAGE_DATA, localItems} };
 
-const changeBook = ({ key, value, index, ...e }) => {
-    if (!key) {
+const changeBook = (itemData) => {
+
         return {
             type: CHANGE_BOOK,
-            key: e.target.name,
-            value: e.target.value,
-            index
+            itemData
         };
-    }
-    return {
-        type: CHANGE_BOOK,
-        key,
-        value,
-        index
-    };
+
 };
 
 export function onAddBook(form) {
+    console.log(form);
     return (dispatch) => {
         if (form.author.length === 0 || form.name.length === 0  || form.subtitle.length === 0 || !form.img.data) {
             dispatch(errorAddBook({info:'Заполните все поля и загрузите обложку!', classInfo:'dz-info dz-error'}));
         } else {
-            dispatch(addBook());
-            dispatch(cleanForm());
+            if(!form.changeForm){
+                console.log('CLEAN_FORM');
+                dispatch(addBook());
+                dispatch(cleanForm());
+            }else{
+                dispatch(changeBook(form));
+                dispatch(cleanEditForm());
+            }
         }
     }
 }
-export  { onSelectBook, loadLocalData, changeBook};
+export  { onSelectBook, loadLocalData};

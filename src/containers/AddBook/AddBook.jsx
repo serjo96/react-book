@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateBookForm, onAddBook, cleanForm, errorAddBook } from '../../actions/book';
+import { updateBookForm, onAddBook, cleanForm, errorAddBook } from '../../actions/book-action';
 import BookForm from '../../components/BookForm/BookForm';
 
 class AddBook extends Component {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import {loadLocalData, deleteBook, onSelectBook} from '../../actions/book'
+import {loadLocalData, deleteBook, onSelectBook, changeBookData} from '../../actions/book-action'
 import BookItem from '../../components/Book/BookItem';
 
 class BookList extends Component {
@@ -14,7 +14,10 @@ class BookList extends Component {
 		localStorage.setItem('items', JSON.stringify(this.props.books))
 	};
 
-
+	takeItemData = (index, data) => {
+			this.props.changeBookData(data);
+			this.props.onSelectBook(index)
+	};
 
 	render() {
 		console.warn(this.props);
@@ -33,7 +36,7 @@ class BookList extends Component {
 								key={index}
 								loadLocalData={loadLocalData}
 								deleteBook={this.props.deleteBook}
-								changeItem={this.props.onSelectBook}
+								changeItem={this.takeItemData}
 								selected={this.props.selectBook === index}
 							/>)
 					}
@@ -61,7 +64,8 @@ function mapStateToProps (state) {
 const mapDispatchToProps = (dispatch) => ({
     loadLocalData: (item) => dispatch(loadLocalData(item)),
     deleteBook: (item) => dispatch(deleteBook(item)),
-    onSelectBook: (item) => dispatch(onSelectBook(item))
+    onSelectBook: (item) => dispatch(onSelectBook(item)),
+    changeBookData: (item) => dispatch(changeBookData(item))
 });
 
 

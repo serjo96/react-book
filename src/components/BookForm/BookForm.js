@@ -5,7 +5,6 @@ class BookForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            file: '',
             imageStatusMessage: '',
             imgStatus: true,
             imgMessageClass: 'dz-message',
@@ -14,12 +13,11 @@ class BookForm extends Component {
     }
 
     drawImg = () => {
-        const { file } = this.state;
         if (this.props.img.data) {
             return <div className="imgPreview is--checked" onClick={(e) => e.preventDefault()}>
                 <div className="imgPreview__info">
-                    <div>{file.name}</div>
-                    <div>{formatBytes(file.size)}</div>
+                    <div>{this.props.img.fileName}</div>
+                    <div>{formatBytes(this.props.img.fileSize)}</div>
                 </div>
                 <img className="dz-image" src={this.props.img.data} onLoad={this.CheckImg} />
             </div>
@@ -63,20 +61,17 @@ class BookForm extends Component {
         });
         const _this = this;
         reader.onloadend = () => {
-            var image = new Image();
+            let image = new Image();
+
             image.onload = function() {
                 if (this.width === 140 && this.height === 205) {
                     _this.props.onInputChange({  key: 'img',  value: { data: reader.result, fileName: file.name, fileSize: file.size } });
-                    _this.props.errorAction({info:'Обложка успешно загружена', classInfo:'dz-info dz-success'});
+                    {_this.props.errorAction({info:'Обложка успешно загружена', classInfo:'dz-info dz-success'});}
                 } else {
-                    _this.props.errorAction({info:'Обложка должна быть 140х205', classInfo:'dz-info dz-error'});
+                    {_this.props.errorAction({info:'Обложка должна быть 140х205', classInfo:'dz-info dz-error'});}
                 }
             };
             image.src = reader.result;
-            this.setState({
-                file: file,
-                imgStatus: true
-            });
         };
         reader.readAsDataURL(file);
     };
