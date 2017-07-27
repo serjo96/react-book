@@ -15,7 +15,7 @@ const BookItem = (props) => (
 					classInfo: ''
 				 },
 				 index: props.index,
-				 formType: 'change'
+					 changeForm: true
 			 }
 			 )} />
 		<div className="book-item__data">

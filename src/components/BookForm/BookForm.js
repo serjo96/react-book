@@ -103,7 +103,6 @@ class BookForm extends Component {
     }
 
     render() {
-        console.log(this.props);
             return (
                 <div className="add-book-form">
                     <div className="inputs-book">
