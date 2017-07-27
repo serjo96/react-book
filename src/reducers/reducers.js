@@ -1,4 +1,4 @@
-import {ADD_BOOK, FORM_BOOK, CLEAN_FORM, DELETE_BOOK, SELECT_BOOK, LOAD_LOCAL_STORAGE_DATA, CHANGE_BOOK, ERROR_ADD_BOOK, TAKE_CHANGE_FORM} from '../constants'
+import {ADD_BOOK, FORM_BOOK, CLEAN_FORM, DELETE_BOOK, SELECT_BOOK, LOAD_LOCAL_STORAGE_DATA, CHANGE_BOOK, ERROR_ADD_BOOK, TAKE_CHANGE_DATA, CHANGES_FORM_BOOK} from '../constants'
 import update from 'react-addons-update';
 
 const initialState = {
@@ -42,6 +42,19 @@ export default function rootReducer(state = initialState, action) {
                 }
             });
 
+        case CHANGES_FORM_BOOK:
+            return update(state, {
+                changeBookFrom: {
+                    [action.key]: { $set: action.value }
+                }
+            });
+
+        case TAKE_CHANGE_DATA:
+            return  Object.assign({}, state, {
+               changeBookFrom: action.data
+            });
+
+
         case ERROR_ADD_BOOK:
             return update(state, {
                 addBook: {
@@ -84,14 +97,10 @@ export default function rootReducer(state = initialState, action) {
         case CHANGE_BOOK:
             return update(state, {
                 books: {
-                    [action.index]: {
-                        [action.key]: { $set: action.value }
-                    },
+                    [action.itemData.index]: { $set: action.itemData}
                 }
             });
 
-        case TAKE_CHANGE_FORM:
-            return state;
 
 
         default:
