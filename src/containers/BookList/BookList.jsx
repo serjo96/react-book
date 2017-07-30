@@ -20,7 +20,6 @@ class BookList extends Component {
 	};
 
 	render() {
-		console.warn(this.props);
 		if(this.props.books.length > 0){
 			return (
 				<div className='book-list clearfix'>

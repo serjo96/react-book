@@ -5,42 +5,6 @@ import BookForm from '../../components/BookForm/BookForm';
 
 class AddBook extends Component {
 
-    /* takeVal = () => {
-        if(this.state.author.length !== 0 && this.state.name.length !== 0 && this.state.imagePreviewUrl){
-            if(!this.props.change){
-                this.props.addBook({
-                    id: Math.floor(Math.random() * (250 - 1) + 1).toString(),
-                    author: this.state.author,
-                    name: this.state.name,
-                    imgUrl: this.state.imagePreviewUrl
-                });
-            }else{
-                this.props.changeBook({
-                    index: this.props.change.index,
-                    id: Math.floor(Math.random() * (250 - 1) + 1).toString(),
-                    author: this.state.author,
-                    name: this.state.name,
-                    imgUrl: this.state.imagePreviewUrl
-                });
-            }
-            this.setState({
-                imgMessageClass: 'dz-message',
-                imagePreviewUrl: '',
-                imgStatus: false
-            });
-        }else {
-            this.setState({
-                imgInfoClass: 'dz-info dz-error',
-                imageStatusMessage: 'Заполните все поля и загрузите обложку!'
-            });
-            setTimeout(()=> this.setState({
-                imageStatusMessage: '',
-                imgInfoClass: 'dz-info'
-            }), 2500);
-        }
-    }
-    */
-
 
     onSubmit = () => {
     	console.warn(this.props.bookForm);
@@ -70,7 +34,6 @@ class AddBook extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    change: state.changesData,
     bookForm: state.addBook
 });
 

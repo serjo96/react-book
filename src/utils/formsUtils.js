@@ -6,3 +6,12 @@ export const  formatBytes = (bytes, decimals) => {
         i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 };
+
+export const textValidation = (e) => {
+    let regexp = /^[a-zA-Z]+$/;
+    if (e.match(regexp)){
+       return true
+    } else{
+        return false
+    }
+};
