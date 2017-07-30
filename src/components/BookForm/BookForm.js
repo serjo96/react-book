@@ -26,54 +26,28 @@ class BookForm extends Component {
         }
     };
 
-  /*  CheckImg = (e) => {
-        if(e.target.width === 140 && e.target.height === 205){
-            this.setState({
-                imageStatusMessage: 'Обложка успешно загружена',
-                imgInfoClass: 'dz-info dz-success',
-                imgMessageClass: 'is--hide',
-                imgStatus: true
-            });
-            setTimeout(()=> this.setState({imageStatusMessage: '', imgInfoClass: 'dz-info'}), 2500);
-            e.target.parentNode.classList.add('is--checked');
-            e.target.classList.remove('img-checking');
-        }else{
-            e.target.parentNode.classList.remove('is--checked');
-            this.setState({
-                imgStatus: false,
-                imageStatusMessage: 'Обложка должна быть 140х205',
-                imgInfoClass: 'dz-info dz-error',
-                imgMessageClass: 'dz-message'
-            });
-            setTimeout(()=> this.setState({
-                imageStatusMessage: '',
-                imgInfoClass: 'dz-info'
-            }), 2500);
-        }
-    };
-    */
-
     _handleImageChange = (e) => {
         let reader = new FileReader();
         let file = e.files[0];
-        this.setState({
-            imageStatusMessage: 'loading'
-        });
         const _this = this;
-        reader.onloadend = () => {
-            let image = new Image();
+        if (file && file.type.match('image.*')) {
+            reader.onloadend = () => {
+                let image = new Image();
 
-            image.onload = function() {
-                if (this.width === 140 && this.height === 205) {
-                    _this.props.onInputChange({  key: 'img',  value: { data: reader.result, fileName: file.name, fileSize: file.size } });
-                    {_this.props.errorAction({info:'Обложка успешно загружена', classInfo:'dz-info dz-success'});}
-                } else {
-                    {_this.props.errorAction({info:'Обложка должна быть 140х205', classInfo:'dz-info dz-error'});}
-                }
+                image.onload = function() {
+                    if (this.width === 140 && this.height === 205) {
+                        _this.props.onInputChange({  key: 'img',  value: { data: reader.result, fileName: file.name, fileSize: file.size } });
+                        {_this.props.errorAction({info:'Обложка успешно загружена', classInfo:'dz-info dz-success'});}
+                        e.value = '';
+                    } else {
+                        {_this.props.errorAction({info:'Обложка должна быть 140х205', classInfo:'dz-info dz-error'});}
+                    }
+                };
+                image.src = reader.result;
             };
-            image.src = reader.result;
-        };
-        reader.readAsDataURL(file);
+            reader.readAsDataURL(file);
+        }
+
     };
 
     drop(e) {
@@ -101,6 +75,7 @@ class BookForm extends Component {
             e.target.closest('.img-load-preview').classList.remove("is--hover")
         }
     }
+
 
     render() {
             return (

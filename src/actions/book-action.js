@@ -1,4 +1,5 @@
 import {ADD_BOOK, ERROR_ADD_BOOK, CLEAN_FORM, FORM_BOOK, DELETE_BOOK, SELECT_BOOK, LOAD_LOCAL_STORAGE_DATA, CHANGE_BOOK, TAKE_CHANGE_DATA, CHANGES_FORM_BOOK, CLEAN_EDIT_FORM} from '../constants'
+import {textValidation} from '../utils/formsUtils';
 
 export const updateBookForm = ({ key, value, ...e }) => {
     if (!key) {
@@ -95,13 +96,17 @@ export function onAddBook(form) {
         if (form.author.length === 0 || form.name.length === 0  || form.subtitle.length === 0 || !form.img.data) {
             dispatch(errorAddBook({info:'Заполните все поля и загрузите обложку!', classInfo:'dz-info dz-error'}));
         } else {
-            if(!form.changeForm){
-                console.log('CLEAN_FORM');
-                dispatch(addBook());
-                dispatch(cleanForm());
-            }else{
-                dispatch(changeBook(form));
-                dispatch(cleanEditForm());
+            if(textValidation(form.author) || textValidation(form.name) || textValidation(form.subtitle)){
+                if(!form.changeForm){
+                    dispatch(addBook());
+                    dispatch(cleanForm());
+                }else{
+                    dispatch(changeBook(form));
+                    dispatch(cleanEditForm());
+                }
+            }
+            else{
+                dispatch(errorAddBook({info:'Допустимы только латинские символы.', classInfo:'dz-info dz-error'}));
             }
         }
     }
