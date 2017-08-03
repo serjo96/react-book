@@ -8,7 +8,7 @@ export const  formatBytes = (bytes, decimals) => {
 };
 
 export const textValidation = (e) => {
-    let regexp = /^[a-zA-Z]+$/;
+    let regexp = /^[а-яА-ЯёЁa-zA-Z]+$/;
     if (e.match(regexp)){
        return true
     } else{

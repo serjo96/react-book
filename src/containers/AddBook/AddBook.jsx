@@ -26,7 +26,7 @@ class AddBook extends Component {
 					/>
 				</div>
 				<div className="button-wrap">
-					<button className="btn-add-book" onClick={this.onSubmit}>Добавить книгу</button>
+					<button className="btn-add-book btn-aqua" onClick={this.onSubmit}>Добавить книгу</button>
 				</div>
 			</div>
         )

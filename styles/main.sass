@@ -8,6 +8,14 @@ body
 .is--hide
   display: none
 
+.btn-aqua
+  border: none
+  background: #1f908a
+  color: #fff
+  cursor: pointer
+  &:hover
+    background: #37bab3
+
 .main
   width: 1024px
   margin: 0 auto
@@ -95,14 +103,9 @@ body
   visibility: hidden
 
 .btn-add-book
-  background: #1f908a
-  color: #fff
-  border: none
   padding: 18px 30px
   margin-top: 49px
-  cursor: pointer
-  &:hover
-    background: #37bab3
+
 
 .dz-info
   position: absolute
@@ -139,7 +142,7 @@ body
 
 .book-item
   float: left
-  margin: 5px 14px
+  margin: 5px 12px
   position: relative
   border: 2px solid transparent
   &:hover
@@ -187,17 +190,19 @@ body
   background: url('../img/pencil.svg') no-repeat
   left: -5px
 
-.btn-save-list
+.btn-list
 	position: absolute
 	bottom: 10px
+
+.btn-save-list
 	right: 20px
-	border: none
-	background: #1f908a
-	color: #fff
-	cursor: pointer
 	padding: 10px
-	&:hover
-		background: #37bab3
+
+
+.btn-dlt-list
+  left: 20px
+  padding: 10px
+
 
 .change-book
   .add-book-form

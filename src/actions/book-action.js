@@ -1,4 +1,4 @@
-import {ADD_BOOK, ERROR_ADD_BOOK, CLEAN_FORM, FORM_BOOK, DELETE_BOOK, SELECT_BOOK, LOAD_LOCAL_STORAGE_DATA, CHANGE_BOOK, TAKE_CHANGE_DATA, CHANGES_FORM_BOOK, CLEAN_EDIT_FORM} from '../constants'
+import {ADD_BOOK, ERROR_ADD_BOOK, CLEAN_FORM, FORM_BOOK, DELETE_BOOK, SELECT_BOOK, LOAD_LOCAL_STORAGE_DATA, CHANGE_BOOK, TAKE_CHANGE_DATA, CHANGES_FORM_BOOK, CLEAN_EDIT_FORM, DELETE_ALL_BOOK} from '../constants'
 import {textValidation} from '../utils/formsUtils';
 
 export const updateBookForm = ({ key, value, ...e }) => {
@@ -68,6 +68,15 @@ export function deleteBook (bookID){
         bookID
     }
 }
+
+export function deleteAllBook (){
+    return{
+        type: DELETE_ALL_BOOK,
+
+    }
+}
+
+
 const onSelectBook = (selectedBook) => { return {type: SELECT_BOOK, selectedBook} };
 
 export const changeBookData = (data) => {
@@ -79,7 +88,7 @@ export const changeBookData = (data) => {
 
 };
 
-const loadLocalData = (localItems) => { return {type: LOAD_LOCAL_STORAGE_DATA, localItems} };
+export const loadLocalData = (localItems) => { return {type: LOAD_LOCAL_STORAGE_DATA, localItems} };
 
 const changeBook = (itemData) => {
 
@@ -93,7 +102,7 @@ const changeBook = (itemData) => {
 export function onAddBook(form) {
     console.log(form);
     return (dispatch) => {
-        if (form.author.length === 0 || form.name.length === 0  || form.subtitle.length === 0 || !form.img.data) {
+        if (form.author.length === 0 || form.name.length === 0  || !form.img.data) {
             dispatch(errorAddBook({info:'Заполните все поля и загрузите обложку!', classInfo:'dz-info dz-error'}));
         } else {
             if(textValidation(form.author) || textValidation(form.name) || textValidation(form.subtitle)){
@@ -111,4 +120,4 @@ export function onAddBook(form) {
         }
     }
 }
-export  { onSelectBook, loadLocalData};
+export  { onSelectBook};

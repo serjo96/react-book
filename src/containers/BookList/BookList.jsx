@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import {loadLocalData, deleteBook, onSelectBook, changeBookData} from '../../actions/book-action'
+import {loadLocalData, deleteBook, onSelectBook, changeBookData, deleteAllBook} from '../../actions/book-action'
 import BookItem from '../../components/Book/BookItem';
 
 class BookList extends Component {
@@ -14,12 +14,21 @@ class BookList extends Component {
 		localStorage.setItem('items', JSON.stringify(this.props.books))
 	};
 
+    onDelete = () => {
+		this.props.deleteAllBook();
+        localStorage.removeItem('items')
+	};
+
 	takeItemData = (index, data) => {
 			this.props.changeBookData(data);
 			this.props.onSelectBook(index)
 	};
 
 	render() {
+		let _this = this;
+        window.addEventListener('unload', function() {
+			localStorage.setItem('items', JSON.stringify(_this.props.books))
+        });
 		if(this.props.books.length > 0){
 			return (
 				<div className='book-list clearfix'>
@@ -36,10 +45,11 @@ class BookList extends Component {
 								loadLocalData={loadLocalData}
 								deleteBook={this.props.deleteBook}
 								changeItem={this.takeItemData}
-								selected={this.props.selectBook === index}
+
 							/>)
 					}
-					<button className="btn-save-list" onClick={this.onSave}>Сохранить список книг</button>
+					<button className="btn-list btn-aqua btn-dlt-list" onClick={this.onDelete}>Удалить все книги</button>
+					<button className="btn-list btn-aqua btn-save-list" onClick={this.onSave}>Сохранить список книг</button>
 				</div>
 			)
 		}else {
@@ -63,6 +73,7 @@ function mapStateToProps (state) {
 const mapDispatchToProps = (dispatch) => ({
     loadLocalData: (item) => dispatch(loadLocalData(item)),
     deleteBook: (item) => dispatch(deleteBook(item)),
+    deleteAllBook: (item) => dispatch(deleteAllBook(item)),
     onSelectBook: (item) => dispatch(onSelectBook(item)),
     changeBookData: (item) => dispatch(changeBookData(item))
 });
