@@ -31,7 +31,7 @@ class Book extends Component {
 						errorAction={this.props.errorAddBook}
 					/>
 					<div className="button-wrap">
-						<button className="btn-add-book" onClick={() => this.onSubmit()}>Сохранить изменения</button>
+						<button className="btn-add-book btn-aqua" onClick={() => this.onSubmit()}>Сохранить изменения</button>
 					</div>
 				</div>
 			</div>
