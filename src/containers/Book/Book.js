@@ -7,12 +7,12 @@ class Book extends Component {
 
     onSubmit = () => {
         this.props.onSelectBook(-1);
-        console.log(this.props.books);
-        this.props.onAddBook(this.props.books);
+        console.log(this.props.changeBookForm);
+        this.props.onAddBook(this.props.changeBookForm);
     };
 
 	render() {
-		const { books } = this.props;
+		const { changeBookForm } = this.props;
 		if (this.props.selectBook === -1){
 			return null;
 		}
@@ -22,12 +22,12 @@ class Book extends Component {
 				<div className="change-book">
 					<BookForm
 						onInputChange={this.props.updateChangeBookForm}
-						author={books.author}
-						name={books.name}
-						subtitle={books.subtitle}
-						id={books.id}
-						img={books.img}
-						error={books.error}
+						author={changeBookForm.author}
+						name={changeBookForm.name}
+						subtitle={changeBookForm.subtitle}
+						id={changeBookForm.id}
+						img={changeBookForm.img}
+						error={changeBookForm.error}
 						errorAction={this.props.errorAddBook}
 					/>
 					<div className="button-wrap">
@@ -42,7 +42,7 @@ class Book extends Component {
 function mapStateToProps (state) {
 	return {
 		selectBook: state.selectBook,
-		books: state.changeBookFrom
+		changeBookForm: state.changeBookFrom
 	}
 }
 

@@ -16,7 +16,7 @@ const BookItem = (props) => (
 				 },
 				 index: props.index,
 					 changeForm: true
-			 }
+			 	}
 			 )} />
 		<div className="book-item__data">
 			<img className="book-item__img" src={props.img.data}  alt=""/>

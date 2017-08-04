@@ -72,10 +72,8 @@ export function deleteBook (bookID){
 export function deleteAllBook (){
     return{
         type: DELETE_ALL_BOOK,
-
     }
 }
-
 
 const onSelectBook = (selectedBook) => { return {type: SELECT_BOOK, selectedBook} };
 
@@ -85,7 +83,6 @@ export const changeBookData = (data) => {
             type: TAKE_CHANGE_DATA,
             data
         };
-
 };
 
 export const loadLocalData = (localItems) => { return {type: LOAD_LOCAL_STORAGE_DATA, localItems} };
@@ -96,7 +93,6 @@ const changeBook = (itemData) => {
             type: CHANGE_BOOK,
             itemData
         };
-
 };
 
 export function onAddBook(form) {
