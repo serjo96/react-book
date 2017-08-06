@@ -5,8 +5,19 @@ body
   background: #ece7e7
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
 
+.container
+  margin-bottom: 20px
+
 .is--hide
   display: none
+
+.btn-aqua
+  border: none
+  background: #1f908a
+  color: #fff
+  cursor: pointer
+  &:hover
+    background: #37bab3
 
 .main
   width: 1024px
@@ -20,7 +31,8 @@ body
   padding-top: 78px
   background: #fff
 
-.inputs-filds
+//add form
+.add-form
   padding-left: 39px
 
   .app__title
@@ -29,28 +41,34 @@ body
 
   .inputs-book
     width: 100%
-    input
-      width: 100%
-      display: block
-      border: none
-      border-bottom: 1px solid #bbdddb
+    .form-input-wrap
+      input
+        width: 100%
+        display: block
+        border: none
+        border-bottom: 1px solid #bbdddb
 
-.add-book
-  background: #577ca1
-  color: #fff
-  display: inline-block
-  width: 100%
-  text-align: center
-  padding: 5px 0
-  cursor: pointer
+//change form
+.change-book
+  .add-book-form
+    transform: translate3d(0, 0, 0)
+  .inputs-book
+    .form-input-wrap
+      margin-right: 5px
+      position: relative
+      display: inline-block
+      input
+        border: 0
+        padding: 3px 0
+        padding-left: 12px
 
-
+//drop Zone
 .img-load-preview
   margin-top: 20px
   border: 2px dashed #0087F7
   border-radius: 5px
   background: white
-  padding: 30px 36px
+  padding: 30px 0
   text-align: center
   position: relative
   overflow: hidden
@@ -73,10 +91,11 @@ body
       img
         filter: blur(8px)
       .imgPreview__info
-        display: block
+        opacity: 1
 
 .imgPreview__info
-  display: none
+  color: #fff
+  opacity: 0
   position: absolute
   top: 15px
   left: 0
@@ -86,6 +105,7 @@ body
 
 .imgPreview.is--checked
     height: 126px
+    width: 147px
     transform: scale(1.05, 1.05)
 
 .img-checking
@@ -93,17 +113,12 @@ body
   visibility: hidden
 
 .btn-add-book
-  background: #1f908a
-  color: #fff
-  border: none
   padding: 18px 30px
   margin-top: 49px
-  cursor: pointer
-  &:hover
-    background: #37bab3
 
+//info block
 .dz-info
-  position: absolute
+  position: fixed
   top: 50%
   left: 0
   right: 0
@@ -112,6 +127,7 @@ body
   z-index: 25
   padding: 10px
   background: #fff
+  text-align: center
   opacity: 0
   transform: translateY(-320%)
   transition: all .8s linear
@@ -127,6 +143,7 @@ body
   transform: translateY(0)
   background: #FF3635
 
+//book list
 .book-list
   background: #fff
   padding: 15px 6px
@@ -135,13 +152,30 @@ body
   margin-bottom: 20px
   position: relative
 
+.btn-list
+  position: absolute
+  bottom: 10px
+
+.btn-save-list
+  right: 20px
+  padding: 10px
+
+.btn-dlt-list
+  left: 20px
+  padding: 10px
+
+//book item
 .book-item
   float: left
-  margin: 5px 14px
+  margin: 5px 12px
   position: relative
+  border: 2px solid transparent
   &:hover
     .book-item__btn
       display: block
+
+.book-item--selected
+    border: 2px solid #0087F7
   
 .book-item__data
   position: relative
@@ -157,6 +191,16 @@ body
   color: #fff
   text-align: center
 
+.book-item__author
+  margin-top: 5px
+
+.book-item__name
+  margin: 5px 0
+
+.book-item__img
+  display: block
+  height: 100%
+
 .book-item__btn
   width: 20px
   height: 20px
@@ -167,7 +211,7 @@ body
   z-index: 15
   transition: transform 0.5s linear
   &:hover
-    transform: rotateY(160deg)
+    transform: scale(1.2)
 
 .delete-btn
   background: url('../img/error.svg') no-repeat
@@ -177,15 +221,6 @@ body
   background: url('../img/pencil.svg') no-repeat
   left: -5px
 
-.btn-save-list
-	position: absolute
-	bottom: 10px
-	right: 20px
-	border: none
-	background: #1f908a
-	color: #fff
-	cursor: pointer
-	padding: 10px
-	&:hover
-		background: #37bab3
+
+
 

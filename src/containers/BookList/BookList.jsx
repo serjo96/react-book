@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import {loadLocalData, deleteBook, onSelectBook} from '../../actions/book'
+import {loadLocalData, deleteBook, onSelectBook, changeBookData, deleteAllBook} from '../../actions/book-action'
 import BookItem from '../../components/Book/BookItem';
 
 class BookList extends Component {
@@ -13,11 +13,23 @@ class BookList extends Component {
 	onSave = () => {
 		localStorage.setItem('items', JSON.stringify(this.props.books))
 	};
-    onSelect = (index) => {
-        this.props.onSelectBook(index);
+
+    onDelete = () => {
+		this.props.deleteAllBook();
+		this.props.onSelectBook(-1);
+        localStorage.removeItem('items');
 	};
+
+	takeItemData = (index, data) => {
+			this.props.changeBookData(data);
+			this.props.onSelectBook(index)
+	};
+
 	render() {
-		console.warn(this.props);
+		let _this = this;
+        window.addEventListener('unload', function() {
+			localStorage.setItem('items', JSON.stringify(_this.props.books))
+        });
 		if(this.props.books.length > 0){
 			return (
 				<div className='book-list clearfix'>
@@ -26,16 +38,20 @@ class BookList extends Component {
 							<BookItem
 								author={item.author}
 								name={item.name}
+								subtitle={item.subtitle}
 								id={item.id}
-								img={item.imgUrl}
+								img={item.img}
 								index={index}
 								key={index}
+								selected={this.props.selectBook === index}
 								loadLocalData={loadLocalData}
-								deleteBook={deleteBook}
-								onClick={this.onSelect}
+								deleteBook={this.props.deleteBook}
+								changeItem={this.takeItemData}
+
 							/>)
 					}
-					<button className="btn-save-list" onClick={this.onSave}>Сохранить список книг</button>
+					<button className="btn-list btn-aqua btn-dlt-list" onClick={this.onDelete}>Удалить все книги</button>
+					<button className="btn-list btn-aqua btn-save-list" onClick={this.onSave}>Сохранить список книг</button>
 				</div>
 			)
 		}else {
@@ -46,19 +62,19 @@ class BookList extends Component {
 	}
 }
 
-
-
 function mapStateToProps (state) {
 	return {
-		books: state.books
+		books: state.books,
+		selectBook: state.selectBook
 	}
 }
-
 
 const mapDispatchToProps = (dispatch) => ({
     loadLocalData: (item) => dispatch(loadLocalData(item)),
     deleteBook: (item) => dispatch(deleteBook(item)),
-    onSelectBook: (item) => dispatch(onSelectBook(item))
+    deleteAllBook: (item) => dispatch(deleteAllBook(item)),
+    onSelectBook: (item) => dispatch(onSelectBook(item)),
+    changeBookData: (item) => dispatch(changeBookData(item))
 });
 
 

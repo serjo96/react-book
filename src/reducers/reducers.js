@@ -1,4 +1,4 @@
-import {ADD_BOOK, FORM_BOOK, CLEAN_FORM, DELETE_BOOK, SELECT_BOOK, LOAD_LOCAL_STORAGE_DATA, CHANGE_BOOK} from '../constants'
+import {ADD_BOOK, FORM_BOOK, CLEAN_FORM, DELETE_BOOK, SELECT_BOOK, LOAD_LOCAL_STORAGE_DATA, CHANGE_BOOK, ERROR_ADD_BOOK, TAKE_CHANGE_DATA, CHANGES_FORM_BOOK, CLEAN_EDIT_FORM, DELETE_ALL_BOOK} from '../constants'
 import update from 'react-addons-update';
 
 const initialState = {
@@ -8,34 +8,93 @@ const initialState = {
         id: '',
         author: '',
         name: '',
-        imgUrl: '',
-    }
+        subtitle: '',
+        img: {
+            size: 0,
+            name: '',
+            data: null
+        },
+        error: {
+            info: '',
+            classInfo: 'dz-info'
+        }
+    },
+    changeBookFrom: {}
 } ;
 export default function rootReducer(state = initialState, action) {
     console.log(action);
     switch (action.type) {
+
         case ADD_BOOK:
             return update(state, {
-                    books: {$push: [state.addBook]}
+                    books: {
+                        $push: [{
+                            ...state.addBook,
+                            id: Math.floor(Math.random() * (250 - 1) + 1)
+                        }]
+                    }
                 });
+
         case FORM_BOOK:
             return update(state, {
                 addBook: {
-                    [action.key]: { $set: action.value}
+                    [action.key]: { $set: action.value }
                 }
             });
+
+        case CHANGES_FORM_BOOK:
+            return update(state, {
+                changeBookFrom: {
+                    [action.key]: { $set: action.value }
+                }
+            });
+
+        case TAKE_CHANGE_DATA:
+            return  Object.assign({}, state, {
+               changeBookFrom: action.data
+            });
+
+
+        case ERROR_ADD_BOOK:
+            return update(state, {
+                addBook: {
+                    error: { $set: action.data }
+                }
+            });
+
         case CLEAN_FORM:
             return Object.assign({}, state, {
                 addBook: {
-                    id: '',
                     author: '',
                     name: '',
-                    imgUrl: '',
+                    subtitle: '',
+                    img: {
+                        size: 0,
+                        name: '',
+                        data: null
+                    },
+                    error: {
+                        info: '',
+                        classInfo: ''
+                    }
                 }
             });
+
+        case CLEAN_EDIT_FORM:
+            return Object.assign({}, state, {
+                changeBookFrom: {}
+            });
+
         case DELETE_BOOK:
-            const books = state.books.filter(({id}) => id !== action.bookID);
-            return {books};
+            const books = state.books.filter(({ id }) => id !== action.bookID);
+            return Object.assign({}, state,{
+                books
+            });
+
+        case DELETE_ALL_BOOK:
+            return Object.assign({}, state,{
+                books: []
+            });
 
         case SELECT_BOOK:
             return Object.assign({}, state, {selectBook: action.selectedBook});
@@ -48,12 +107,9 @@ export default function rootReducer(state = initialState, action) {
         case CHANGE_BOOK:
             return update(state, {
                 books: {
-                    [action.book.index]: { $set: action.book}
+                    [action.itemData.index]: { $set: action.itemData}
                 }
             });
-
-
-
 
         default:
             return state;
