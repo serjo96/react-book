@@ -16,7 +16,8 @@ class BookList extends Component {
 
     onDelete = () => {
 		this.props.deleteAllBook();
-        localStorage.removeItem('items')
+		this.props.onSelectBook(-1);
+        localStorage.removeItem('items');
 	};
 
 	takeItemData = (index, data) => {
@@ -42,6 +43,7 @@ class BookList extends Component {
 								img={item.img}
 								index={index}
 								key={index}
+								selected={this.props.selectBook === index}
 								loadLocalData={loadLocalData}
 								deleteBook={this.props.deleteBook}
 								changeItem={this.takeItemData}
@@ -60,15 +62,12 @@ class BookList extends Component {
 	}
 }
 
-
-
 function mapStateToProps (state) {
 	return {
 		books: state.books,
 		selectBook: state.selectBook
 	}
 }
-
 
 const mapDispatchToProps = (dispatch) => ({
     loadLocalData: (item) => dispatch(loadLocalData(item)),

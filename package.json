@@ -20,6 +20,7 @@
     "has-flag": "^2.0.0",
     "node-sass": "^4.5.3",
     "react": "15.4.2",
+    "react-addons-update": "^15.6.0",
     "react-dom": "15.4.2",
     "react-redux": "^5.0.4",
     "redux": "^3.6.0",

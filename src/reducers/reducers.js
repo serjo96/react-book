@@ -82,9 +82,7 @@ export default function rootReducer(state = initialState, action) {
 
         case CLEAN_EDIT_FORM:
             return Object.assign({}, state, {
-                changeBookFrom: {
-
-                }
+                changeBookFrom: {}
             });
 
         case DELETE_BOOK:
@@ -112,8 +110,6 @@ export default function rootReducer(state = initialState, action) {
                     [action.itemData.index]: { $set: action.itemData}
                 }
             });
-
-
 
         default:
             return state;
