@@ -31,9 +31,10 @@ export const updateChangeBookForm = ({ key, value, ...e }) => {
     };
 };
 
-function addBook(){
+function addBook(data){
     return {
         type: ADD_BOOK,
+        book: data
     };
 }
 function onErrorAddBook(data){
@@ -49,11 +50,6 @@ export function errorAddBook(data){
             dispatch(onErrorAddBook({  classInfo: 'dz-info' }));
         }, 2500);
     }
-}
-function cleanForm(){
-    return {
-        type: CLEAN_FORM,
-    };
 }
 
 function cleanEditForm(){
@@ -98,19 +94,17 @@ const changeBook = (itemData) => {
 export function onAddBook(form) {
     console.log(form);
     return (dispatch) => {
-        if (form.author.length === 0 || form.name.length === 0  || !form.img.data) {
+        if (form.author.length === 0 || form.name.length === 0  || !form.imgUrl) {
             dispatch(errorAddBook({info:'Заполните все поля и загрузите обложку!', classInfo:'dz-info dz-error'}));
         } else {
-            console.log(textValidation(form.author));
-            console.log(textValidation(form.name));
-            console.log(textValidation(form.subtitle));
             if(textValidation(form.author) || textValidation(form.name) || textValidation(form.subtitle)){
                 if(!form.changeForm){
-                    dispatch(addBook());
-                    dispatch(cleanForm());
+                    dispatch(addBook(form));
+
                 }else{
                     dispatch(changeBook(form));
                     dispatch(cleanEditForm());
+
                 }
             }
             else{

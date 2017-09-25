@@ -2,15 +2,81 @@ import React, { Component } from 'react';
 import { formatBytes } from '../../utils/formsUtils'
 
 class BookForm extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: '',
+            author: '',
+            subtitle: '',
+            imgUrl: '',
+            imgData: '',
+            imageStatusMessage: '',
+            imgStatus: true,
+            imgMessageClass: 'dz-message',
+            imgInfoClass: 'dz-info'
+        }
+    }
+
+    componentDidMount(){
+        if(!this.props.formStatus){
+            this.setState({
+                name: this.props.name,
+                author: this.props.author,
+                subtitle: this.props.subtitle,
+                imgUrl: this.props.img,
+                imgData: this.props.imgData
+            });
+        }
+    }
+
+    sendData = () => {
+        if(this.props.formStatus){
+            this.props.submit({
+                name: this.state.name,
+                author: this.state.author,
+                subtitle: this.state.subtitle,
+                imgUrl: this.state.imgUrl,
+                imgData: this.state.imgData,
+                indexBook: this.props.indexBook
+            });
+        }else {
+            this.props.submit({
+                name: this.state.name,
+                author: this.state.author,
+                subtitle: this.state.subtitle,
+                imgUrl: this.state.imgUrl,
+                imgData: this.state.imgData,
+                indexBook: this.props.indexBook,
+                changeForm: true
+            });
+        }
+        this.clearInputs();
+    };
+
+    clearInputs(){
+        this.setState({
+            author: '',
+            name: '',
+            subtitle: '',
+            img: ''
+        })
+
+    }
+
+    onInputChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+    };
 
     drawImg = () => {
-        if (this.props.img.data) {
+        if (this.state.imgUrl) {
             return <div className="imgPreview is--checked" onClick={(e) => e.preventDefault()}>
                 <div className="imgPreview__info">
-                    <div>{this.props.img.fileName}</div>
-                    <div>{formatBytes(this.props.img.fileSize)}</div>
+                    <div>{this.state.imgData.name}</div>
+                    <div>{formatBytes(this.state.imgData.size)}</div>
                 </div>
-                <img className="dz-image" src={this.props.img.data} onLoad={this.CheckImg} />
+                <img className="dz-image" src={this.state.imgUrl}/>
             </div>
         } else {
             return null
@@ -27,7 +93,10 @@ class BookForm extends Component {
 
                 image.onload = function() {
                     if (this.width === 140 && this.height === 205) {
-                        _this.props.onInputChange({  key: 'img',  value: { data: reader.result, fileName: file.name, fileSize: file.size } });
+                        _this.setState({
+                            imgData: file,
+                            imgUrl: reader.result
+                         });
                         {_this.props.errorAction({info:'Обложка успешно загружена', classInfo:'dz-info dz-success'});}
                         e.value = '';
                     } else {
@@ -50,10 +119,12 @@ class BookForm extends Component {
         const dt = e.dataTransfer;
         this._handleImageChange(dt)
     }
+
     dragenter(e) {
         e.stopPropagation();
         e.preventDefault();
     }
+
     dragover(e) {
         e.stopPropagation();
         e.preventDefault();
@@ -61,12 +132,12 @@ class BookForm extends Component {
             e.target.closest('.img-load-preview').classList.add("is--hover")
         }
     }
+
     dragLeave(e){
         if (e.target.className.indexOf('img-load-preview') === 0 || e.target.className.indexOf('dz-message') === 0) {
             e.target.closest('.img-load-preview').classList.remove("is--hover")
         }
     }
-
 
     render() {
             return (
@@ -74,47 +145,44 @@ class BookForm extends Component {
                     <div className="inputs-book">
                         <div className="form-input-wrap inputs-book__author">
                             <input
-                                onChange={this.props.onInputChange}
+                                onChange={this.onInputChange}
                                 className="inputs-book__author"
                                 name="author"
                                 placeholder="Автор"
                                 type="text"
-                                value={this.props.author}
+                                value={this.state.author}
                             />
                         </div>
-
                         <div className="form-input-wrap inputs-book__name">
                             <input
-                                onChange={this.props.onInputChange}
+                                onChange={this.onInputChange}
                                 className="inputs-book__name"
                                 name="name"
                                 placeholder="Заголовок"
                                 type="text"
-                                value={this.props.name}
+                                value={this.state.name}
                             />
                         </div>
-
                         <div className="form-input-wrap inputs-book__subtitle">
                             <input
-                                onChange={this.props.onInputChange}
+                                onChange={this.onInputChange}
                                 className="inputs-book__subtitle"
                                 type="text"
                                 name="subtitle"
                                 placeholder="Подзаголовок"
-                                value={this.props.subtitle}
+                                value={this.state.subtitle}
                             />
                         </div>
                     </div>
-
                     <input
-                        id={this.props.id ? "fileUpdate" : "fileUpload"}
+                        id={!this.props.formStatus ? "fileUpdate" : "fileUpload"}
                         className="add-file-input"
                         type="file"
                         accept=".jpg,.png"
                         onChange={(e) => this._handleImageChange(e.target)}
                     />
                     <div className={this.props.error.classInfo}>{this.props.error.info}</div>
-                    <label htmlFor={this.props.id ? "fileUpdate" : "fileUpload"}>
+                    <label htmlFor={!this.props.formStatus ? "fileUpdate" : "fileUpload"}>
                         <div className="img-load-preview"
                              onDragOver={(e) => this.dragover(e)}
                              onDragEnter={(e) => this.dragenter(e)}
@@ -122,9 +190,19 @@ class BookForm extends Component {
                              onDragLeave={(e) => this.dragLeave(e)}
                         >
                             {this.drawImg()}
-                            {!this.props.img.data && <div className="dz-message">Drop files here or click to upload.</div>}
+                            {!this.state.imgUrl && <div className="dz-message">Drop files here or click to upload.</div>}
                         </div>
                     </label>
+                    {this.props.formStatus ?
+                        <div className="button-wrap">
+                            <button className="btn-add-book btn-aqua" onClick={this.sendData}>Добавить книгу</button>
+                        </div>
+                        :
+                        <div className="button-wrap">
+                            <button className="btn-add-book btn-aqua" onClick={this.sendData}>Сохранить изменения</button>
+                        </div>
+                    }
+
                 </div>
             );
     }

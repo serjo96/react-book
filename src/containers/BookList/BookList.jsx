@@ -5,10 +5,10 @@ import BookItem from '../../components/Book/BookItem';
 
 class BookList extends Component {
 	componentDidMount(){
-		if (localStorage.getItem('items')) {
-			const localItems = localStorage.getItem('items');
-			this.props.loadLocalData(JSON.parse(localItems));
-		}
+        let _this = this;
+        window.addEventListener('unload', function() {
+            localStorage.setItem('items', JSON.stringify(_this.props.books))
+        });
 	}
 	onSave = () => {
 		localStorage.setItem('items', JSON.stringify(this.props.books))
@@ -26,10 +26,8 @@ class BookList extends Component {
 	};
 
 	render() {
-		let _this = this;
-        window.addEventListener('unload', function() {
-			localStorage.setItem('items', JSON.stringify(_this.props.books))
-        });
+
+
 		if(this.props.books.length > 0){
 			return (
 				<div className='book-list clearfix'>
@@ -40,7 +38,8 @@ class BookList extends Component {
 								name={item.name}
 								subtitle={item.subtitle}
 								id={item.id}
-								img={item.img}
+								img={item.imgUrl}
+								imgData={item.imgData}
 								index={index}
 								key={index}
 								selected={this.props.selectBook === index}

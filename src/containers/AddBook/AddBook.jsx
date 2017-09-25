@@ -4,8 +4,8 @@ import { updateBookForm, onAddBook, cleanForm, errorAddBook } from '../../action
 import BookForm from '../../components/BookForm/BookForm';
 
 class AddBook extends Component {
-    onSubmit = () => {
-        this.props.onAddBook(this.props.bookForm);
+    onSubmit = (data) => {
+        this.props.onAddBook(data);
     };
 
     render() {
@@ -14,17 +14,12 @@ class AddBook extends Component {
 				<div className="add-form">
 					<h1 className="app__title">Создай свой список книг!</h1>
 					<BookForm
-						onInputChange={this.props.updateBookForm}
-						author={this.props.bookForm.author}
-						name={this.props.bookForm.name}
-						subtitle={this.props.bookForm.subtitle}
-						img={this.props.bookForm.img}
+						submit={this.onSubmit}
 						error={this.props.bookForm.error}
 						errorAction={this.props.errorAddBook}
+						formStatus={true}
 					/>
-				</div>
-				<div className="button-wrap">
-					<button className="btn-add-book btn-aqua" onClick={this.onSubmit}>Добавить книгу</button>
+
 				</div>
 			</div>
         )

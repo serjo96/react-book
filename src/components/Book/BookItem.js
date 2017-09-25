@@ -10,6 +10,7 @@ const BookItem = (props) => (
 				 subtitle: props.subtitle,
 				 id: props.id,
 				 img: props.img,
+				 imgData: props.imgData,
 				 error: {
 					info: '',
 					classInfo: ''
@@ -19,7 +20,7 @@ const BookItem = (props) => (
 			 	}
 			 )} />
 		<div className="book-item__data">
-			<img className="book-item__img" src={props.img.data}  alt=""/>
+			<img className="book-item__img" src={props.img}  alt=""/>
 			<div className="book-item__info">
 				<div className="book-item__author">{props.author}</div>
 				<div className="book-item__name">{props.name}</div>

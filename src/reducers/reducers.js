@@ -2,18 +2,10 @@ import {ADD_BOOK, FORM_BOOK, CLEAN_FORM, DELETE_BOOK, SELECT_BOOK, LOAD_LOCAL_ST
 import update from 'react-addons-update';
 
 const initialState = {
-    books: [],
+    books: JSON.parse(localStorage.getItem('items')) || [],
     selectBook: -1,
     addBook: {
-        id: '',
-        author: '',
-        name: '',
-        subtitle: '',
-        img: {
-            size: 0,
-            name: '',
-            data: null
-        },
+
         error: {
             info: '',
             classInfo: 'dz-info'
@@ -21,26 +13,23 @@ const initialState = {
     },
     changeBookFrom: {}
 } ;
+
 export default function rootReducer(state = initialState, action) {
     console.log(action);
     switch (action.type) {
 
         case ADD_BOOK:
+            // localStorage.setItem('items', JSON.stringify(state.books.concat([action.book])));
             return update(state, {
                     books: {
                         $push: [{
-                            ...state.addBook,
+                            ...action.book,
                             id: Math.floor(Math.random() * (250 - 1) + 1)
                         }]
                     }
                 });
 
-        case FORM_BOOK:
-            return update(state, {
-                addBook: {
-                    [action.key]: { $set: action.value }
-                }
-            });
+
 
         case CHANGES_FORM_BOOK:
             return update(state, {
@@ -107,7 +96,7 @@ export default function rootReducer(state = initialState, action) {
         case CHANGE_BOOK:
             return update(state, {
                 books: {
-                    [action.itemData.index]: { $set: action.itemData}
+                    [action.itemData.indexBook]: { $set: action.itemData}
                 }
             });
 
